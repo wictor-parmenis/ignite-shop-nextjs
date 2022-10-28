@@ -1,6 +1,7 @@
+import axios from 'axios';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import Stripe from 'stripe';
 import { stripe } from '../../config/stripe';
 import { ProductContainer , ImageContainer, ProductDetails} from '../../styles/pages/product';
@@ -12,10 +13,30 @@ interface IProduct {
     imageUrl: string
     price: string
     description: string
+    defaultPriceId: string
   }
 }
 
 const Product: React.FC<IProduct> = ({product}) => {
+  const [creatingCheckoutSession, setCreatingCheckoutSession] = useState(false)
+
+  async function handleBuyProduct() {
+    
+    try {    
+      setCreatingCheckoutSession(true)  
+      const {data: checkoutUrl} = await axios.post('/api/checkout', {
+        priceId: product.defaultPriceId
+      })
+
+      window.location.href = checkoutUrl.checkoutUrl
+      
+    } catch (error) {      
+      alert('Erro ao redirecionar para página de compra.')
+      setCreatingCheckoutSession(false)
+
+    } 
+  }
+
   return (
     <ProductContainer>
     <ImageContainer>
@@ -28,7 +49,7 @@ const Product: React.FC<IProduct> = ({product}) => {
 
       <p>{product.description}</p>
 
-      <button>
+      <button onClick={handleBuyProduct} disabled={creatingCheckoutSession}>
         Comprar agora
       </button>
     </ProductDetails>
@@ -65,6 +86,7 @@ export const getStaticProps: GetStaticProps<any, {id: string}> = async ({params}
       imageUrl: product.images[0],
       name: product.name,
       description: product.description,
+      defaultPriceId: price.id,
       price: new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
