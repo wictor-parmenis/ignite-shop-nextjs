@@ -31,6 +31,7 @@ export default function Home({products}:IHome) {
     <Head>
       <title>Home - Ignite Shop</title>
     </Head>
+    
     <HomeContainer ref={sliderRef} className='keen-slider'>
       {
       products.map((product) => (

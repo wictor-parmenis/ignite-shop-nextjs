@@ -11,6 +11,9 @@ export const ContainerApp = styled('div', {
 export const HeaderApp = styled('header', {
     padding: '2rem 0',
     width: '100%',
+    height: '70px',
     maxWidth: 1180,
     margin: '0 auto',
+    display: 'flex',
+    justifyContent: 'space-between',
 })
