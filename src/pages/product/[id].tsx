@@ -21,7 +21,7 @@ interface IProduct {
 const Product: React.FC<IProduct> = ({product}) => {
   const [creatingCheckoutSession, setCreatingCheckoutSession] = useState(false)
 
-  async function handleBuyProduct() {
+  async function handlePutInTheBag() {
     
     try {    
       setCreatingCheckoutSession(true)  
@@ -54,8 +54,8 @@ const Product: React.FC<IProduct> = ({product}) => {
 
         <p>{product.description}</p>
 
-        <button onClick={handleBuyProduct} disabled={creatingCheckoutSession}>
-          Comprar agora
+        <button onClick={handlePutInTheBag} disabled={creatingCheckoutSession}>
+          Colocar na sacola
         </button>
       </ProductDetails>
     </ProductContainer>

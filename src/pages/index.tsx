@@ -7,6 +7,7 @@ import { stripe } from '../config/stripe'
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
 import Head from 'next/head'
+import CartButtonProduct from './product/_components/CartButtonProduct'
 
 interface IProduct {
   id: string
@@ -40,7 +41,7 @@ export default function Home({products}:IHome) {
           <Image src={product.imageUrl} width={520} height={480}/>
           <footer>
             <strong>{product.name}</strong>
-            <span>{product.price}</span>
+            <CartButtonProduct />
           </footer>
         </Product>
         </Link>

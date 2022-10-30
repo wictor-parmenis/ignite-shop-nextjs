@@ -1,17 +1,25 @@
 import { styled } from "../../styles";
 
-// Make real container for wrapper component and help to adjust span item.
-
 export const CartContainer = styled('div', {
+    height: '80px',
+    width: '80px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '$gray900',
+    'position' :'relative',
+})
+
+export const CartButton = styled('div', {
     'display': 'flex',
     'alignItems': 'center',
     'justifyContent': 'center',
-    'position' :'relative',
     height: '60px',
     width: '60px',
     backgroundColor: '$gray800',
     borderRadius: '8px',
     cursor: 'pointer',
+
 })
 
 

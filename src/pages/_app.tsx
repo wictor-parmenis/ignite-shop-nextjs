@@ -4,6 +4,7 @@ import { ContainerApp, HeaderApp } from "../styles/pages/app"
 import Logo from '../../public/images/logo.svg'
 import Image from "next/image"
 import HeaderCart from "../components/HeaderCart"
+import SideBarCart from "../components/SideBarCart"
 
 globalStyles()
 
@@ -15,6 +16,7 @@ function App({ Component, pageProps }:AppProps) {
         <Image src={Logo} width={160} height={160} />
         <HeaderCart />
       </HeaderApp>
+      <SideBarCart />
       <Component {...pageProps} />
     </ContainerApp>
   )
