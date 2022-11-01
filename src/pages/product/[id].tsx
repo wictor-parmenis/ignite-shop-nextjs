@@ -49,7 +49,7 @@ const Product: React.FC<IProduct> = ({product}) => {
       </ImageContainer>
 
       <ProductDetails>
-        <h1>{product.name}</h1>
+        <p>{product.name}</p>
         <span>{product.price}</span>
 
         <p>{product.description}</p>
