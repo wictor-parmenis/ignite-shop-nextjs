@@ -1,12 +1,16 @@
+import { CSSProperties } from '@stitches/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { X } from 'phosphor-react';
 import React from 'react';
-import { ContainerSideBarCart, CardCartProduct, CloseButton, ContainerCardCartProducts, FooterCart, TitleSideBarCart, ImageContainer, DescriptionsFooter, ButtonContainerFooter, DescriptionsCardCart, MainCardCart } from './styles';
+import { ContainerSideBarCart, CardCartProduct, ContainerCardCartProducts, FooterCart, TitleSideBarCart, ImageContainer, DescriptionsFooter, ButtonContainerFooter, DescriptionsCardCart, MainCardCart, CloseButtonContainer, CloseButtonIconStyles } from './styles';
 
 
 const SideBarCart: React.FC = () => {
   return <ContainerSideBarCart>
-        <CloseButton />
+        <CloseButtonContainer>
+            <X size={30} color={'#c4c4cc'} style={CloseButtonIconStyles as CSSProperties}/>
+        </CloseButtonContainer>
         <TitleSideBarCart>Sacola de compras</TitleSideBarCart>
         <MainCardCart>
             <ContainerCardCartProducts>

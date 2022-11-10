@@ -1,3 +1,4 @@
+import { relative } from "path";
 import { styled } from "../../styles";
 
 export const ContainerSideBarCart = styled('div', {
@@ -7,7 +8,7 @@ export const ContainerSideBarCart = styled('div', {
     height: '100%',
     backgroundColor: '$gray800',
     position: 'fixed',
-    padding: '3rem 2rem 2rem 2rem',
+    padding: '2rem 2rem 2rem 2rem',
     top: '0',
     right: '0',
 
@@ -20,18 +21,24 @@ export const TitleSideBarCart = styled('h2', {
     marginTop: '4rem',
 })
 
-export const CloseButton = styled('span', {
-    color: '$gray300',
-    fontSize: '$xl',
+export const CloseButtonContainer = styled('div', {
+    display: 'flex',
+    position: 'relative',
+})
+
+export const CloseButtonIconStyles = {
     position: 'absolute',
     top: '10',
-    right: '10'
-})
+    right: '0',
+}
+
+
 
 export const MainCardCart = styled('div', {
     display: 'flex',
     flexDirection: 'column',
-    // justifyContent: 'space-between',
+    height: '75vh',
+    justifyContent: 'space-between',
     alignContent: 'space-between'
 })
 
@@ -106,7 +113,43 @@ export const FooterCart = styled('footer', {
 
 export const DescriptionsFooter = styled('div', {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    gap: '1rem',
+
+    div: {
+        display:'flex',
+        justifyContent: 'space-between',
+
+        '&:first-child': {
+
+            p: {
+                '&:first-child': {
+
+                },
+                '&:nth-child(2)': {
+                    fontSize: '$lg'
+                }
+            }
+            
+        },
+
+        '&:nth-child(2)': {
+            p: {
+                '&:first-child': {
+                    fontSize: '$lg',
+                    fontWeigth: 'bold',
+
+                },
+                '&:nth-child(2)': {
+                    fontSize: '$xl',
+                    fontWeigth: 'bold',
+                }
+            }
+        }
+        
+
+        
+    }
 })
 
 export const RowFooter = styled('div', {
@@ -118,6 +161,10 @@ export const RowFooter = styled('div', {
 
 export const ButtonContainerFooter = styled('div', {
     marginTop: '2rem',
+    display: 'flex',
+    justifyContent: 'center',
+
+
     button: {
         marginTop: 'auto',
         backgroundColor: '$green500',
@@ -128,6 +175,8 @@ export const ButtonContainerFooter = styled('div', {
         cursor: 'pointer',
         fontWeight: 'bold',
         fontSize: '$md',
+        width: '90%',
+        margin: 'auto',
     
         '&:disabled': {
           opacity: '0.6',
