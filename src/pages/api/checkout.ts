@@ -1,39 +1,36 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { stripe } from "../../config/stripe";
 
+
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     
-    const {priceId} = req.body
+    const {line_items} = req.body
 
     if (req.method !== "POST") {
         return res.status(405).json({ error: "Method not allowed." });
       }
     
-      if (!priceId) {
-        return res.status(400).json({ error: 'Price not found.' });
+      if (!line_items) {
+        return res.status(400).json({ error: 'Items not found.' });
       }
 
-    const {NEXT_URL} = process.env
+      if (line_items.length === 0) {
+        return res.status(400).json({ error: 'Items not found' });
+      }
 
-    console.log('passed .env');
+    const {NEXT_PUBLIC_NEXT_URL} = process.env
     
 
-    const cancelURL = `${NEXT_URL}/`
-    const successURL = `${NEXT_URL}/success?session_id={CHECKOUT_SESSION_ID}`
+    const cancelURL = `${NEXT_PUBLIC_NEXT_URL}/`
+    const successURL = `${NEXT_PUBLIC_NEXT_URL}/success?session_id={CHECKOUT_SESSION_ID}`
+
 
     const checkoutSession = await stripe.checkout.sessions.create({
         mode: 'subscription',
         cancel_url: cancelURL,
         success_url: successURL ,
-        line_items: [
-            {
-                price: priceId,
-                quantity: 1
-            }
-        ]
+        line_items,
     })
-
-    console.log('passed stripe', checkoutSession);
     
 
     return  res.status(201).json({

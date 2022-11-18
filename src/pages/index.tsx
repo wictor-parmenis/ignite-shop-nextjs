@@ -7,7 +7,7 @@ import { stripe } from '../config/stripe'
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
 import Head from 'next/head'
-import CartButtonProduct from './product/_components/CartButtonProduct'
+import CartButtonProduct from '../components/CartButtonProduct'
 
 interface IProduct {
   id: string
@@ -27,13 +27,15 @@ export default function Home({products}:IHome) {
       spacing: 48
     }
   });
+
   return (
     <>
     <Head>
       <title>Home - Ignite Shop</title>
     </Head>
     
-    <HomeContainer ref={sliderRef} className='keen-slider'>
+    <HomeContainer ref={sliderRef} className={`keen-slider`}>
+      
       {
       products.map((product) => (
         <Link key={product.id} href={`/product/${product.id}`} prefetch={false}>
@@ -58,12 +60,14 @@ export const getStaticProps:GetStaticProps = async () => {
   const {data} = await stripe.products.list({
     expand: ['data.default_price']
   })
+  
   const products = data.map((product) => {
     const price = product.default_price as Stripe.Price
     return {
       id: product.id,
       imageUrl: product.images[0],
       name: product.name,
+      priceNumber: price.unit_amount,
       price: new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',

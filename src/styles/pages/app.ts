@@ -17,5 +17,10 @@ export const HeaderApp = styled('header', {
     maxWidth: 1180,
     margin: '0 auto',
     display: 'flex',
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    button: {
+        marginLeft: 'auto'
+    }
 })

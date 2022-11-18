@@ -1,16 +1,20 @@
-import { relative } from "path";
 import { styled } from "../../styles";
+import * as Dialog from "@radix-ui/react-dialog";
 
-export const ContainerSideBarCart = styled('div', {
+export const ContainerSideBarCart = styled(Dialog.Content, {
     flex: '1',
     justifyContent: 'center',
-    width: '30rem',
+    width: '36rem',
     height: '100%',
     backgroundColor: '$gray800',
     position: 'fixed',
-    padding: '2rem 2rem 2rem 2rem',
+    padding: '2rem 2rem 2rem 0',
     top: '0',
     right: '0',
+
+    '&.hidden': {
+        display: 'none'
+    }
 
 })
 
@@ -19,19 +23,17 @@ export const TitleSideBarCart = styled('h2', {
     fontSize: '$xl',
     marginBottom: '2rem',
     marginTop: '4rem',
+    paddingLeft: '2rem',
 })
 
-export const CloseButtonContainer = styled('div', {
-    display: 'flex',
-    position: 'relative',
-})
-
-export const CloseButtonIconStyles = {
-    position: 'absolute',
-    top: '10',
-    right: '0',
-}
-
+export const CartClose = styled(Dialog.Close, {
+    background: "none",
+    border: "none",
+    color: "$gray500",
+    position: "absolute",
+    top: "1.75rem",
+    right: "1.75rem",
+  });
 
 
 export const MainCardCart = styled('div', {
@@ -44,7 +46,9 @@ export const MainCardCart = styled('div', {
 
 export const ContainerCardCartProducts = styled('div', {
     display: 'flex',
-    gap: '1rem'
+    flexDirection: 'column',
+    gap: '2rem',
+    alignItems: 'flex-start',
 })
 
 export const CardCartProduct = styled('div', {
@@ -52,13 +56,13 @@ export const CardCartProduct = styled('div', {
     gap: '1rem',
     alignItems: 'center',
     justifyContent: 'center',
-    h3: {
 
-    },
+    position: 'relative',
 
-    span: {
+    paddingLeft: '1rem',
 
-    }
+    height: '8rem',
+
 })
 
 export const ImageContainer = styled('div', {
@@ -72,10 +76,34 @@ export const ImageContainer = styled('div', {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    
+    marginLeft: '1rem',
+
   
   
     img: {
       objectFit: 'cover',
+    },
+
+    span: {
+        '&.quantity': {
+            'position': 'absolute',
+            'backgroundColor': '$green500',
+            'borderRadius': '50%',
+            'top': '0',
+            'left': '0',
+            height: '20px',
+            width: '20px',
+            border: '2px solid $gray900',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent :'center',
+            color: '$gray100',
+            fontWeight: 'bold',
+            fontSize: '$st',
+
+            marginLeft: '1rem'
+        }
     }
 })
 export const DescriptionsCardCart = styled('div', {
@@ -106,7 +134,9 @@ export const DescriptionsCardCart = styled('div', {
 export const FooterCart = styled('footer', {
     display: 'flex',
     flexDirection: 'column',
-    gap: '2rem'    
+    gap: '2rem',
+    paddingRight: '1rem'  ,
+    paddingLeft: '2rem'
 })
 
 
