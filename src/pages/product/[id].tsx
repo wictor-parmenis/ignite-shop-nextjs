@@ -3,7 +3,9 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import Stripe from 'stripe';
+import { useShoppingCart } from 'use-shopping-cart';
 import { stripe } from '../../config/stripe';
 import { ProductContainer , ImageContainer, ProductDetails} from '../../styles/pages/product';
 
@@ -15,27 +17,35 @@ interface IProduct {
     price: string
     description: string
     defaultPriceId: string
+    priceNumber: number
   }
 }
 
 const Product: React.FC<IProduct> = ({product}) => {
   const [creatingCheckoutSession, setCreatingCheckoutSession] = useState(false)
+  const { addItem } = useShoppingCart()
+  
 
-  async function handleBuyProduct() {
-    
+  async function handlePutInTheBag() {
     try {    
       setCreatingCheckoutSession(true)  
-      const {data: checkoutUrl} = await axios.post('/api/checkout', {
-        priceId: product.defaultPriceId
+      addItem({
+        currency: 'BR',
+        price_id: product.defaultPriceId,
+        id: product.id,
+        name: product.name,
+        price: product.priceNumber,
+        description: product.description,
+        image: product.imageUrl,
       })
 
-      window.location.href = checkoutUrl.checkoutUrl
+      toast.success('Item adicionado com sucesso')
       
     } catch (error) {      
-      alert('Erro ao redirecionar para página de compra.')
+      toast.error('Erro ao adicionar no carrinho')
+    } finally {
       setCreatingCheckoutSession(false)
-
-    } 
+    }
   }
 
   return (
@@ -49,13 +59,13 @@ const Product: React.FC<IProduct> = ({product}) => {
       </ImageContainer>
 
       <ProductDetails>
-        <h1>{product.name}</h1>
+        <p>{product.name}</p>
         <span>{product.price}</span>
 
         <p>{product.description}</p>
 
-        <button onClick={handleBuyProduct} disabled={creatingCheckoutSession}>
-          Comprar agora
+        <button onClick={handlePutInTheBag} disabled={creatingCheckoutSession}>
+          Colocar na sacola
         </button>
       </ProductDetails>
     </ProductContainer>
@@ -84,6 +94,8 @@ export const getStaticProps: GetStaticProps<any, {id: string}> = async ({params}
     expand: ['default_price']
   })
 
+  console.log(product, 'product')
+
   const price = product.default_price as Stripe.Price
 
   return {
@@ -93,10 +105,11 @@ export const getStaticProps: GetStaticProps<any, {id: string}> = async ({params}
       name: product.name,
       description: product.description,
       defaultPriceId: price.id,
+      priceNumber: price.unit_amount,
       price: new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
-      }).format(price.unit_amount / 100)
+      }).format(price.unit_amount / 100),
     }},
     revalidate: 60 * 60 * 1 // 1 hour
   }

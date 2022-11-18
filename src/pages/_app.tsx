@@ -1,8 +1,8 @@
 import { AppProps } from "next/app"
 import { globalStyles } from "../styles/global"
 import { ContainerApp, HeaderApp } from "../styles/pages/app"
-import Logo from '../../public/images/logo.svg'
-import Image from "next/image"
+import Header from "../components/Header"
+import { CartProvider } from 'use-shopping-cart'
 
 globalStyles()
 
@@ -10,10 +10,21 @@ function App({ Component, pageProps }:AppProps) {
 
   return (
     <ContainerApp>
-      <HeaderApp>
-        <Image src={Logo} width={160} height={160} />
-      </HeaderApp>
-      <Component {...pageProps} />
+       <CartProvider
+        shouldPersist
+        mode="payment"
+        cartMode="client-only"
+        stripe={process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY}
+        successUrl={`${process.env.NEXT_PUBLIC_NEXT_URL}/success`}
+        cancelUrl={`${process.env.NEXT_PUBLIC_NEXT_URL}`}
+        currency="BRL"
+        allowedCountries={['BR']}
+        billingAddressCollection={true}
+        language="pt-BR"
+      >
+        <Header />
+        <Component {...pageProps} />
+      </CartProvider>
     </ContainerApp>
   )
 }
